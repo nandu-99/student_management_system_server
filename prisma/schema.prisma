@@ -1,0 +1,88 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Student {
+  id             Int      @id @default(autoincrement())
+  enrollmentId   Int?      @unique
+  name           String   
+  email          String   @unique
+  password       String
+  role           String   
+  dob            DateTime?
+  contactNumber  String?
+  address        String?
+  parentName     String?
+  parentContact  String?
+  school         String?
+  profile_image  String?
+  createdAt      DateTime @default(now())
+}
+
+
+model Teacher {
+  id             Int      @id @default(autoincrement())
+  name           String  
+  email          String   @unique
+  password       String
+  role           String
+  dob            DateTime?
+  contact_number String?
+  address        String?
+  profile_image  String?
+  school         String?
+  createdAt      DateTime @default(now())
+}
+
+
+model Admin {
+  id             Int      @id @default(autoincrement())
+  name           String   
+  email          String   @unique
+  password       String
+  role           String
+  dob            DateTime?
+  contact_number String?
+  address        String?
+  profile_image  String?
+  school         String?
+  createdAt      DateTime @default(now())
+}
+
+model LeaveRequest {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  leaveType   String
+  startDate   DateTime
+  endDate     DateTime
+  reason      String
+  file        String?
+  status      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Contest {
+  id        Int       @id @default(autoincrement())
+  name      String
+  date      DateTime
+  endDate   DateTime?
+  weightage Float
+  course    String
+  school    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  event     String
+  date      DateTime
+  endDate   DateTime
+}
+
