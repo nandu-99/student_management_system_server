@@ -4,10 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js",
-    "migrate": "prisma migrate dev", 
-    "generate": "prisma generate",
-    "vercel-build": "npm run migrate && npm run generate && node index.js"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "@prisma/client": "^5.19.0",
