@@ -30,7 +30,7 @@ app.use(cors());
 //auth
 app.post('/signup', createUser);
 app.post('/login', loginUser);
-app.post('/logout', verifyToken, logoutUser);
+app.post('/logout', logoutUser);
 
 //profile
 app.get('/profile', verifyToken, getProfile);

@@ -107,8 +107,12 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-  res.cookie('token', '', { maxAge: 0 });
-  res.status(200).json({ message: 'Logout successful' });
+  try {
+    return res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Error during logout:', error);
+    return res.status(500).json({ message: 'Logout failed', error: error.message });
+  }
 };
 
 const getProfile = async (req, res) => {
@@ -422,7 +426,6 @@ const getLeavesByAdminSchool = async (req, res) => {
     const filteredLeaveRequests = leaveRequests
       .map(request => {
         const student = studentDetails[request.userId];
-        console.log(student)
         if (student && student.school === adminSchool) {
           return {
             ...request,
@@ -446,8 +449,8 @@ const getLeavesByAdminSchool = async (req, res) => {
 };
 
 const approveOrRejectLeave = async (req, res) => {
-  const { leaveId, action } = req.body;
-
+  const { leaveId, action, reason } = req.body; 
+  console.log(reason)
   try {
     // Find the leave request by its ID
     const leave = await prismaClient.leaveRequest.findUnique({
@@ -474,12 +477,22 @@ const approveOrRejectLeave = async (req, res) => {
       data: { status }
     });
 
+    // Prepare the email content
+    let emailText = `Dear ${student.name},\n\nYour leave request has been ${status}.`;
+
+    // Add the rejection reason if the leave was rejected
+    if (action === 'reject' && reason) {
+      emailText += `\n\nReason for rejection: ${reason}`;
+    }
+
+    emailText += `\n\nIf you have any questions, please contact the administration.\n\nBest regards,\nNewton School of Technology`;
+
     // Send an email to the student
     const mailOptions = {
       from: 'vivekananda.99666@gmail.com', // Sender address
       to: student.email, // List of receivers
       subject: 'Leave Request Status Update', // Subject line
-      text: `Dear ${student.name},\n\nYour leave request has been ${status}. If you have any questions, please contact the administration.\n\nBest regards,\nNewton School of Technology` // Plain text body
+      text: emailText // Email content
     };
 
     await transporter.sendMail(mailOptions);
@@ -490,6 +503,7 @@ const approveOrRejectLeave = async (req, res) => {
     res.status(500).json({ message: 'An error occurred while processing the leave request' });
   }
 };
+
 
 const createEvents =  async (req, res) => {
   try {
