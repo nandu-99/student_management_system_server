@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon index.js",
-    "postinstall": "prisma generate",
-    "migrate": "prisma migrate deploy",
-    "vercel-build": "npm run migrate && node index.js"
+    "migrate": "prisma migrate dev", 
+    "generate": "prisma generate",
+    "vercel-build": "npm run migrate && npm run generate && node index.js"
   },
   "dependencies": {
     "@prisma/client": "^5.19.0",
@@ -21,8 +21,6 @@
     "mysql2": "^2.2.5",
     "nodemailer": "^6.9.15",
     "nodemon": "^2.0.7",
-    "prisma": "^5.19.0",
-    "sequelize": "^6.5.0",
-    "sequelize-cli": "^6.2.0"
+    "prisma": "^5.19.0"
   }
 }
