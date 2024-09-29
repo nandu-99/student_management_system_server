@@ -9,6 +9,16 @@ All requests are made to the base URL:
 https://nst-ru-sms-server.vercel.app/
 ```
 
+Here is the part with only `DATABASE_URL` and `JWT_SECRET`:
+
+```bash
+# JWT Secret
+JWT_SECRET=your_jwt_secret_key
+
+# Database URL
+DATABASE_URL=mysql://username:password@localhost:3306/your_db_name
+```
+
 ## Authentication Endpoints
 
 1. **Register a new user**
