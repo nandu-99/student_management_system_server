@@ -100,6 +100,10 @@ https://nst-ru-sms-server.vercel.app/
 4. **Delete an event**
    - **DELETE** `/events/:id`
    - Requires JWT token as Bearer Token and the ID of the event to delete.
+  
+## Documentation URL
+
+For more detailed information on request and response structures, as well as the database schema, please refer to the full documentation here: [API Documentation](https://docs.google.com/document/d/1az1EGjdQL8rrdOzPG_bccXfr5dVWlOWAk-dKvxzKPpc/edit?usp=sharing)
 
 ## Authorization
 
