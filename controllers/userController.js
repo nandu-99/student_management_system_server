@@ -61,7 +61,7 @@ const createUser = async (req, res) => {
       default:
         return res.status(400).json({ error: 'Invalid role' });
     }
-
+    
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error);
@@ -212,6 +212,9 @@ const createLeaveRequest = async (req, res) => {
     const { id, role } = req.user; 
     if (!isValid(new Date(start_date)) || !isValid(new Date(end_date))) {
       return res.status(400).json({ error: 'Invalid date format' });
+    }
+    if (new Date(end_date) < new Date(start_date)) {
+      return res.status(400).json({ error: 'End date cannot be earlier than start date' });
     }
     const formattedStartDate = formatISO(new Date(start_date));
     const formattedEndDate = formatISO(new Date(end_date));
